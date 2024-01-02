@@ -1001,16 +1001,23 @@ eightndxxqxtwo3cqz47
 fiveeight792eightqskstrftdpccsrgskrhc
 26fmrrhhpthree6b"
 
-let parseLine (line:string) : int =
+let parseLinePart1 (line:string) : int =
     let digits = [|'0';'1';'2';'3';'4';'5';'6';'7';'8';'9'|]
     let firstDigit = line.[line.IndexOfAny digits]
     let lastDigit = line.[line.LastIndexOfAny digits]
     int <| (new string([|firstDigit; lastDigit|]))
 
-let solvePart1 () =
-    let lines = input.Split("\r\n")
-    let numbers = lines |> Array.map parseLine
-    let result = numbers |> Array.sum
+let parseLinePart2 (line:string) : int =
+    0
 
-    result
+let solve (input:string) (parseLine: string -> int) : int =
+    input.Split("\r\n")
+    |> Array.map parseLine
+    |> Array.sum
+
+let solvePart1() =
+    solve input parseLinePart1
+
+let solvePart2() =
+    solve input parseLinePart2
 
