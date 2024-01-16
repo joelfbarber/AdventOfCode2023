@@ -1001,14 +1001,40 @@ eightndxxqxtwo3cqz47
 fiveeight792eightqskstrftdpccsrgskrhc
 26fmrrhhpthree6b"
 
-let parseLinePart1 (line:string) : int =
-    let digits = [|'0';'1';'2';'3';'4';'5';'6';'7';'8';'9'|]
+let findFirstAndLastDigit (line:string) =
+    let digits = [|'1';'2';'3';'4';'5';'6';'7';'8';'9'|]
     let firstDigit = line.[line.IndexOfAny digits]
     let lastDigit = line.[line.LastIndexOfAny digits]
+    firstDigit, lastDigit
+
+let parseLinePart1 (line:string) : int =
+    let firstDigit, lastDigit = findFirstAndLastDigit line
     int <| (new string([|firstDigit; lastDigit|]))
 
 let parseLinePart2 (line:string) : int =
-    0
+    let mutable mutatedLine = line
+    let stringNumbers = 
+        [|
+            "one", "o1e"
+            "two", "t2o"
+            "three", "th3ee"
+            "four", "fo4r"
+            "five", "fi5e"
+            "six", "s6x"
+            "seven", "se7en"
+            "eight", "ei8ht"
+            "nine", "ni9e"
+        |]
+
+    stringNumbers
+    |> Array.iter(fun x ->
+        let find, replacement = x |> fst, x |> snd
+        mutatedLine <- mutatedLine.Replace(find, replacement)
+    )
+
+    let firstDigit, lastDigit = findFirstAndLastDigit mutatedLine
+
+    int <| (new string([|firstDigit; lastDigit|]))
 
 let solve (input:string) (parseLine: string -> int) : int =
     input.Split("\r\n")
