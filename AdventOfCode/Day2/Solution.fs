@@ -72,12 +72,14 @@ let isGamePossible (config:GameConfig) (gameResult: GameResult) : bool =
     isGamePossible
 
 let getMinimumGameConfig (gameResult: GameResult) : GameConfig =
-    //gameResult.Handfuls
     {
-        MaxBlue = 1
-        MaxGreen = 1
-        MaxRed = 1
+        MaxBlue = gameResult.Handfuls |> Array.map (fun x -> x.Blue) |> Array.max
+        MaxGreen = gameResult.Handfuls |> Array.map (fun x -> x.Green) |> Array.max
+        MaxRed = gameResult.Handfuls |> Array.map (fun x -> x.Red) |> Array.max
     }
+
+let calculatePowerOfCubes (config: GameConfig) =
+    config.MaxBlue * config.MaxGreen * config.MaxRed
 
 let solvePart1() =
     let lines = File.ReadAllLines ".\Day2\input.txt"
@@ -100,7 +102,11 @@ let solvePart1() =
 
 let solvePart2() =
     let lines = File.ReadAllLines ".\Day2\input.txt"
-    let gameResults = lines |> Array.map parseLine
+    let powerOfCubes = 
+        lines 
+        |> Array.map parseLine
+        |> Array.map getMinimumGameConfig
+        |> Array.map calculatePowerOfCubes
+        |> Array.sum
 
-
-    0
+    powerOfCubes
