@@ -62,14 +62,14 @@ let isHandfulPossible (config:GameConfig) (handful: HandfulOfCubes) : bool =
         true
 
 let isGamePossible (config:GameConfig) (gameResult: GameResult) : bool =
-    let isHandfulPossible' = isHandfulPossible config
+    gameResult.Handfuls
+    |> Array.map (isHandfulPossible config)
+    |> Array.forall (fun x -> x)
 
-    let isGamePossible =
-        gameResult.Handfuls
-        |> Array.map (isHandfulPossible')
-        |> Array.forall (fun x -> x)
-
-    isGamePossible
+let getGameIdIfPossible (config: GameConfig) (gameResult: GameResult) =
+    match isGamePossible config gameResult with
+    | true -> Some gameResult.GameId
+    | false -> None
 
 let getMinimumGameConfig (gameResult: GameResult) : GameConfig =
     {
@@ -82,31 +82,17 @@ let calculatePowerOfCubes (config: GameConfig) =
     config.MaxBlue * config.MaxGreen * config.MaxRed
 
 let solvePart1() =
-    let lines = File.ReadAllLines ".\Day2\input.txt"
-    let gameResults = lines |> Array.map parseLine
-
     let gameConfig = { MaxBlue = 14; MaxGreen = 13; MaxRed = 12 }
-    let isGamePossible' = isGamePossible gameConfig
-
-    let sumOfPossibleGameIds = 
-        gameResults 
-        |> Array.choose(fun game -> 
-            let isPossible = isGamePossible' game
-            match isPossible with
-            | true -> Some game.GameId
-            | false -> None
-        )
-        |> Array.sum
-
-    sumOfPossibleGameIds
+    let getGameIdIfPossible' = getGameIdIfPossible gameConfig
+    
+    File.ReadAllLines ".\Day2\input.txt"
+    |> Array.map parseLine
+    |> Array.choose getGameIdIfPossible'
+    |> Array.sum
 
 let solvePart2() =
-    let lines = File.ReadAllLines ".\Day2\input.txt"
-    let powerOfCubes = 
-        lines 
-        |> Array.map parseLine
-        |> Array.map getMinimumGameConfig
-        |> Array.map calculatePowerOfCubes
-        |> Array.sum
-
-    powerOfCubes
+    File.ReadAllLines ".\Day2\input.txt"
+    |> Array.map parseLine
+    |> Array.map getMinimumGameConfig
+    |> Array.map calculatePowerOfCubes
+    |> Array.sum

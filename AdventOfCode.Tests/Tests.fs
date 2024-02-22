@@ -18,3 +18,8 @@ module Day2Tests =
     let ``Day2 Part1 answer is 2879`` () =
         let actual = Day2.solvePart1()
         Assert.Equal(2879, actual)
+
+    [<Fact>]
+    let ``Day2 Part2 answer is 65122`` () =
+        let actual = Day2.solvePart1()
+        Assert.Equal(65122, actual)
