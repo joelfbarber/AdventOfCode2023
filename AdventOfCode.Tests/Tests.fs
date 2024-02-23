@@ -21,5 +21,5 @@ module Day2Tests =
 
     [<Fact>]
     let ``Day2 Part2 answer is 65122`` () =
-        let actual = Day2.solvePart1()
+        let actual = Day2.solvePart2()
         Assert.Equal(65122, actual)
