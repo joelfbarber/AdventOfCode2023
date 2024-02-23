@@ -13,7 +13,6 @@ let parseLinePart1 (line:string) : int =
     int <| (new string([|firstDigit; lastDigit|]))
 
 let parseLinePart2 (line:string) : int =
-    let mutable mutatedLine = line
     let stringNumbers = 
         [|
             "one", "o1e"
@@ -27,13 +26,13 @@ let parseLinePart2 (line:string) : int =
             "nine", "ni9e"
         |]
 
-    stringNumbers
-    |> Array.iter(fun x ->
-        let find, replacement = x |> fst, x |> snd
-        mutatedLine <- mutatedLine.Replace(find, replacement)
-    )
+    let newLine =
+        stringNumbers
+        |> Array.fold(fun (acc:string) (find, replacement) ->
+            acc.Replace(find, replacement)
+        ) line
 
-    let firstDigit, lastDigit = findFirstAndLastDigit mutatedLine
+    let firstDigit, lastDigit = findFirstAndLastDigit newLine
 
     int <| (new string([|firstDigit; lastDigit|]))
 
