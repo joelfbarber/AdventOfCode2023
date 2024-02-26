@@ -6,21 +6,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Day3\Day3.fs" />
+    <None Include="day3\part1.md" />
+    <Content Include="day3\input.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="day2\part2.md" />
     <None Include="day2\part1.md" />
     <Content Include="day2\input.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Include="Day2\Solution.fs" />
+    <Compile Include="Day2\Day2.fs" />
     <Content Include="Day1\part2.md" />
     <Content Include="Day1\part1.md" />
     <Content Include="Day1\input.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Include="Day1\Solution.fs" />
+    <Compile Include="Day1\Day1.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
-
-  <ItemGroup />
 
 </Project>
