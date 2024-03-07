@@ -27,19 +27,22 @@ type SchematicCharType =
 
 type ParsedSchematic = SchematicCharType array
 
-let isDot (char:char) =
-    char = '.'
-
-let isSpecialCharacter (char:char) =
-    char |> Char.IsSymbol && not (char |> isDot)
+let (|IsNumber|IsSymbol|IsDot|) (x: char) =
+    match UInt32.TryParse(string x) with
+    | true, x -> IsNumber x
+    | false, _ ->
+        match x with
+        | '.' -> IsDot
+        | _ -> IsSymbol
 
 let parseSchematicCharacter (char: char) (xPosition, yPosition) = 
     match char with
-    | x when x |> isSpecialCharacter = true ->
+    | IsSymbol ->
         SchematicCharType.SpecialCharacter { Location = (xPosition, yPosition) }
-    | x when x |> Char.IsNumber = true ->
+    | IsNumber x ->
         SchematicCharType.Number { Number = x |> int; Location = (xPosition, yPosition) }
-    | _ -> SchematicCharType.Dot
+    | IsDot -> 
+        SchematicCharType.Dot
 
 let parseSchematic (schematic:Schematic) : ParsedSchematic =
     schematic
