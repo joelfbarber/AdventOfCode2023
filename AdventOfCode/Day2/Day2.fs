@@ -81,9 +81,6 @@ let getMinimumGameConfig (gameResult: GameResult) : GameConfig =
 let calculatePowerOfCubes (config: GameConfig) =
     config.MaxBlue * config.MaxGreen * config.MaxRed
 
-let calculatePowerOfCubes2 (config: GameConfig) =
-    config.MaxBlue * config.MaxGreen - config.MaxRed
-
 let solvePart1() =
     let gameConfig = { MaxBlue = 14; MaxGreen = 13; MaxRed = 12 }
     let getGameIdIfPossible' = getGameIdIfPossible gameConfig
